@@ -1,43 +1,47 @@
 import pytest
 from library import MyLibrary
 
+@pytest.mark.parametrize("n, expected_result", [
+    (1, 1),
+    (2, 1),
+    (3, 2),
+    (4, 3),
+    (5, 5),
+    (6, 8),
+    (7, 13),
+    (8, 21),
+    (9, 34),
+    (10, 55)
+])
+def test_fibonacci(n, expected_result):
+    actual_result = MyLibrary.fibonacci(n)
+    assert actual_result == expected_result
 
-class TestLibraryMethods:
+@pytest.mark.parametrize("n, expected_result", [
+    (10, [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]),
+    (5, [1, 1, 2, 3, 5]),
+    (0, []),
+    (1, [1])
+])
+def test_fibonacci_count(n, expected_result):
+    actual_result = MyLibrary.fibonacci_count(n)
+    assert actual_result == expected_result
 
-    def test_fibonacci(self):
-        expected_result = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+@pytest.mark.parametrize("a, b, action, expected_result", [
+    (3, 2, "+", 5),
+    (5, 3, "-", 2),
+    (4, 2, "*", 8),
+    (6, 4, "/", 1.5)
+])
+def test_calculate(a, b, action, expected_result):
+    actual_result = MyLibrary.calculate(a, b, action)
+    assert actual_result == expected_result
 
-        actual_results = []
-        for i in range(1, 11):
-            result = MyLibrary.fibonacci(i)
-            actual_results.append(result)
-
-        assert actual_results == expected_result
-
-    def test_fibonacci_count(self):
-        expected_result = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
-
-        len_real_result = len(expected_result)
-        actual_result = MyLibrary.fibonacci_count(len_real_result)
-
-        assert actual_result == expected_result
-
-    def test_calculate(self):
-        expected_result = [5, 1, 6, 1.5]
-        input_values = [3, 2]
-        actions = ["+", "-", "*", "/"]
-
-        actual_results = []
-        for i in range(len(actions)):
-            result = MyLibrary.calculate(input_values[0], input_values[1], actions[i])
-            actual_results.append(result)
-
-        assert actual_results == expected_result
-
-    def test_bubble_sort(self):
-        expected_result = [0, 1, 2, 3, 5, 7]
-        input_value = [1, 3, 5, 7, 0, 2]
-
-        actual_result = MyLibrary.bubble_sort(input_value)
-
-        assert actual_result == expected_result
+@pytest.mark.parametrize("input_value, expected_result", [
+    ([1, 3, 5, 7, 0, 2], [0, 1, 2, 3, 5, 7]),
+    ([], []),
+    ([5, 4, 3, 2, 1], [1, 2, 3, 4, 5])
+])
+def test_bubble_sort(input_value, expected_result):
+    actual_result = MyLibrary.bubble_sort(input_value)
+    assert actual_result == expected_result
